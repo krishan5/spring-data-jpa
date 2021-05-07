@@ -20,7 +20,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.data:spring-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	
+	//In case I use it as testImplementation, then "Cannot load driver class: org.h2.Driver" exception was coming.
+	//After replacing it with implementation, its working fine.
+	implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -28,7 +32,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
 
 test {
