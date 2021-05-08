@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kk.springboot.entity.Course;
 
 @Repository
-@Transactional
+@Transactional //Use it when perform delete/update/save operations so that we can have rollback support in case of any exception.
 public class CourseRepository {
 	
 	@Autowired
@@ -21,6 +21,16 @@ public class CourseRepository {
 		 * EntityManager find the Course on behalf of given primary key i.e. id
 		 */
 		return entityManager.find(Course.class, id);
+	}
+	
+	public Course save(Course course) {
+		if(course.getId() == 0) {
+			entityManager.persist(course);
+		}
+		else {
+			entityManager.merge(course);
+		}
+		return course;
 	}
 	
 	public void deleteById(long id) {

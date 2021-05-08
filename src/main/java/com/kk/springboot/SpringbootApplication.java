@@ -29,7 +29,14 @@ public class SpringbootApplication implements CommandLineRunner {
 		
 		courseRepo.deleteById(1);
 		course = courseRepo.findById(1);
-		logger.info("Course id=1 >> after deletion >> " + course);		
+		logger.info("Course id=1 >> after deletion >> " + course);
+		
+		Course savedCourse = courseRepo.save(new Course("Java 16 course"));
+		logger.info("Saved course >> " + savedCourse);
+		
+		savedCourse.setName("Java 16 course (updated)");
+		Course updatedCourse = courseRepo.save(savedCourse);
+		logger.info("Updated course >> " + updatedCourse);
 	}
 
 }
