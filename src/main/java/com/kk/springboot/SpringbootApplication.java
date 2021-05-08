@@ -26,6 +26,10 @@ public class SpringbootApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Course course = courseRepo.findById(1);
 		logger.info("Course id=1 >> " + course);
+		
+		courseRepo.deleteById(1);
+		course = courseRepo.findById(1);
+		logger.info("Course id=1 >> after deletion >> " + course);		
 	}
 
 }
