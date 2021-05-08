@@ -1,8 +1,8 @@
 package com.kk.springboot.repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kk.springboot.entity.Course;
@@ -10,7 +10,7 @@ import com.kk.springboot.entity.Course;
 @Repository
 public class CourseRepository {
 	
-	@PersistenceContext
+	@Autowired
 	EntityManager entityManager;
 	
 	public Course findById(long id) {

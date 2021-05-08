@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Course {
 	
 	@Id
-	@GeneratedValue
+	//@GeneratedValue
 	private long id;
 	
 	private String name;
@@ -17,7 +17,8 @@ public class Course {
 		
 	}
 	
-	Course(String name) {
+	Course(long id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 
@@ -30,6 +31,14 @@ public class Course {
 
 	public long getId() {
 		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", name=" + name + "]";
 	}
 	
 }
