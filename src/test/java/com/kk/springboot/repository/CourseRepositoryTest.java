@@ -28,6 +28,27 @@ public class CourseRepositoryTest {
 	
 	@Test
 	@DirtiesContext
+	void testSave() {
+		Course course = courseRepo.save(new Course("New course for testSave()"));
+		course = courseRepo.findById(course.getId());
+		assertEquals("New course for testSave()", course.getName());
+	}
+	
+	@Test
+	@DirtiesContext
+	void testUpdate() {
+		Course course = courseRepo.findById(3);
+		assertEquals("Spring Webflux course", course.getName());
+		
+		course.setName("Spring Webflux course (updated in test)");
+		courseRepo.save(course);
+		
+		course = courseRepo.findById(3);
+		assertEquals("Spring Webflux course (updated in test)", course.getName());
+	}
+	
+	@Test
+	@DirtiesContext
 	/**
 	 * Problem : Following test will actually delete the value from DB which can be used by another test or application. 
 	 * @DirtiesContext tells spring to recover the updated/deleted value after executing the test.
