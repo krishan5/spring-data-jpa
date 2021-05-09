@@ -116,8 +116,10 @@ public class CourseRepository {
 		 * If any changes made done on object after executing any method of EntityManager,
 		 * and we need its last committed changes back then refresh() helps here. 
 		 * It refresh the state of the instance from the database,overwriting changes made to the entity, if any.
+		 * 
+		 * It runs "select" query to fetch latest changes from DB.
 		 */
-		entityManager.refresh(dockerCourse);
+		entityManager.refresh(dockerCourse); //You will see changes in DB >> Docker course - updated before flush()
 	}
 	
 }
