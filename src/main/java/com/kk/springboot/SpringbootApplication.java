@@ -39,6 +39,8 @@ public class SpringbootApplication implements CommandLineRunner {
 		logger.info("Updated course >> " + updatedCourse);
 		
 		courseRepo.howTransactionalMakeImpact();
+		courseRepo.howEntityManagerDetachWork();
+		courseRepo.howEntityManagerClearWork();
 	}
 
 }

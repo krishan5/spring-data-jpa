@@ -61,4 +61,38 @@ public class CourseRepository {
 		course.setName("Transactional effect on setName()");
 	}
 	
+	public void howEntityManagerDetachWork() {
+		Course angularCourse = new Course("Angular course");
+		entityManager.persist(angularCourse);
+		Course reactCourse = new Course("React course");
+		entityManager.persist(reactCourse);
+		
+		/**
+		 * The object you passed to detach() method will never be tracked by the EntityManager
+		 * means if any changes made on that object after detach() will never be persist.
+		 */
+		entityManager.detach(angularCourse);
+		
+		angularCourse.setName("Angular course - updated (detach)"); //This changes will not reflect in DB as this object detached from EntityManager tracking.
+		reactCourse.setName("React course - updated (detach)"); //This changes will be reflect in DB.
+	}
+	
+	public void howEntityManagerClearWork() {
+		Course mlCourse = new Course("Machine learning course");
+		entityManager.persist(mlCourse);
+		Course aiCourse = new Course("Artificial intelligence course");
+		entityManager.persist(aiCourse);
+		
+		/**
+		 * In case you want all objects to clear out from EntityManager tracking then this approach will be used.
+		 * Detach is used to untrack the particular object.
+		 * Clear is used to untrack all objects.
+		 */
+		entityManager.clear();
+		
+		//Following changes will not reflect in DB as all objects cleared out from EntityManager tracking.
+		mlCourse.setName("Machine learning course - updated (clear)");
+		aiCourse.setName("Artificial intelligence course - updated (clear)");
+	}
+	
 }
