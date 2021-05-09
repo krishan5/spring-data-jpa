@@ -18,6 +18,9 @@ import com.kk.springboot.entity.Course;
 public class CourseRepository {
 	
 	@Autowired
+	/**
+	 * Interface used to interact with the persistence context. 
+	 */
 	EntityManager entityManager;
 	
 	public Course findById(long id) {
@@ -115,9 +118,10 @@ public class CourseRepository {
 		/**
 		 * If any changes made done on object after executing any method of EntityManager,
 		 * and we need its last committed changes back then refresh() helps here. 
-		 * It refresh the state of the instance from the database,overwriting changes made to the entity, if any.
+		 * It refresh the state of the instance from the database/persistence context,
+		 * overwriting changes made to the entity, if any.
 		 * 
-		 * It runs "select" query to fetch latest changes from DB.
+		 * It runs "select" query to fetch latest changes from DB/Persistence context.
 		 */
 		entityManager.refresh(dockerCourse); //You will see changes in DB >> Docker course - updated before flush()
 	}
