@@ -41,6 +41,7 @@ public class SpringbootApplication implements CommandLineRunner {
 		courseRepo.howTransactionalMakeImpact();
 		courseRepo.howEntityManagerDetachWork();
 		courseRepo.howEntityManagerClearWork();
+		courseRepo.howEntityManagerFlushAndRefreshWork();
 	}
 
 }

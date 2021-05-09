@@ -95,4 +95,29 @@ public class CourseRepository {
 		aiCourse.setName("Artificial intelligence course - updated (clear)");
 	}
 	
+	public void howEntityManagerFlushAndRefreshWork() {
+		Course dockerCourse = new Course("Docker course");
+		entityManager.persist(dockerCourse);
+		Course kubernetesCourse = new Course("Kubernetes course");
+		entityManager.persist(kubernetesCourse);
+		
+		dockerCourse.setName("Docker course - updated before flush()");
+		
+		/**
+		 * Using flush() you can persist all the changes made earlier
+		 * which can't be undo using refresh()
+		 */
+		entityManager.flush();
+		
+		dockerCourse.setName("Docker course - updated after flush()");
+		kubernetesCourse.setName("Kubernetes course - updated");
+		
+		/**
+		 * If any changes made done on object after executing any method of EntityManager,
+		 * and we need its last committed changes back then refresh() helps here. 
+		 * It refresh the state of the instance from the database,overwriting changes made to the entity, if any.
+		 */
+		entityManager.refresh(dockerCourse);
+	}
+	
 }
