@@ -37,6 +37,8 @@ public class SpringbootApplication implements CommandLineRunner {
 		savedCourse.setName("Java 16 course (updated)");
 		Course updatedCourse = courseRepo.save(savedCourse);
 		logger.info("Updated course >> " + updatedCourse);
+		
+		courseRepo.howTransactionalMakeImpact();
 	}
 
 }
