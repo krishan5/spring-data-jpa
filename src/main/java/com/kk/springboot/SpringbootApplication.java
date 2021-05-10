@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.kk.springboot.entity.Course;
 import com.kk.springboot.repository.CourseRepository;
+import com.kk.springboot.repository.CourseRepositoryUsingJPQL;
 
 @SpringBootApplication
 public class SpringbootApplication implements CommandLineRunner {
@@ -17,6 +18,9 @@ public class SpringbootApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CourseRepository courseRepo;
+	
+	@Autowired
+	private CourseRepositoryUsingJPQL courseRepoJpql;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApplication.class, args);
@@ -24,6 +28,9 @@ public class SpringbootApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		//EntityManager
+		
 		Course course = courseRepo.findById(1);
 		logger.info("Course id=1 >> " + course);
 		
@@ -42,6 +49,12 @@ public class SpringbootApplication implements CommandLineRunner {
 		courseRepo.howEntityManagerDetachWork();
 		courseRepo.howEntityManagerClearWork();
 		courseRepo.howEntityManagerFlushAndRefreshWork();
+		
+		//JPQL
+		
+		courseRepoJpql.select();
+		courseRepoJpql.selectByType();
+		courseRepoJpql.selectByTypeAndWhere();
 	}
 
 }
