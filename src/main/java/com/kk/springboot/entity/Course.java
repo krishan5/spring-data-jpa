@@ -4,10 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "course")
+/**
+ * It's important to note that every @NamedQuery annotation is attached to exactly one entity class or mapped superclass. 
+ * But, since the scope of named queries is the entire persistence unit, we should select the query name carefully to avoid a collision.
+ * Best way to resolve this challenge by appending class name as prefix. Eg: Course.named_query
+ */
+//@NamedQuery(name = "Course.select_named_query", query = "select c from Course c")
+@NamedQueries(value = {
+	@NamedQuery(name = "Course.select_named_query", query = "select c from Course c"),
+	@NamedQuery(name = "Course.select_where_questionMarked_named_query", query = "select c from Course c where c.id = ?1"),
+	@NamedQuery(name = "Course.select_where_attribute_named_query", query = "select c from Course c where c.id = :id")
+})
 public class Course {
 	
 	@Id

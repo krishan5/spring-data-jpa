@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import com.kk.springboot.entity.Course;
 import com.kk.springboot.repository.CourseRepository;
 import com.kk.springboot.repository.CourseRepositoryUsingJPQL;
 
 @SpringBootApplication
+//@EntityScan("com.kk.springboot.repository")
 public class SpringbootApplication implements CommandLineRunner {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -55,6 +57,8 @@ public class SpringbootApplication implements CommandLineRunner {
 		courseRepoJpql.select();
 		courseRepoJpql.selectByType();
 		courseRepoJpql.selectByTypeAndWhere();
+		courseRepoJpql.selectNamedQuery();
+		courseRepoJpql.selectWhereNamedQueries();
 	}
 
 }
