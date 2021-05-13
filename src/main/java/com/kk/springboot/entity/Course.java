@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,6 +22,12 @@ import javax.persistence.Table;
 	@NamedQuery(name = "Course.select_named_query", query = "select c from Course c"),
 	@NamedQuery(name = "Course.select_where_questionMarked_named_query", query = "select c from Course c where c.id = ?1"),
 	@NamedQuery(name = "Course.select_where_attribute_named_query", query = "select c from Course c where c.id = :id")
+})
+//@NamedNativeQuery(name = "Course.select_named_native_query", query = "select * from Course")
+@NamedNativeQueries(value = {
+	@NamedNativeQuery(name = "Course.select_named_native_query", query = "select * from Course"),
+	@NamedNativeQuery(name = "Course.select_where_questionMarked_named_native_query", query = "select * from Course where id = ?1"),
+	@NamedNativeQuery(name = "Course.select_where_attribute_named_native_query", query = "select * from Course where id = :id")
 })
 public class Course {
 	

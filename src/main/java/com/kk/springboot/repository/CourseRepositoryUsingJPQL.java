@@ -25,7 +25,7 @@ public class CourseRepositoryUsingJPQL {
 	
 	public void select() {
 		Query query = entityManager.createQuery("select c from Course c");
-		List courseList = query.getResultList();
+		List<?> courseList = query.getResultList();
 		System.out.println("JPQL select()");
 		courseList.forEach(c -> System.out.println(c));
 		System.out.println();
@@ -67,6 +67,38 @@ public class CourseRepositoryUsingJPQL {
 		query2.setParameter("id", Long.valueOf(3L)); //If I pass simple 3 (primitive int/long value) then it will error. Hence passing Long class.
 		List<Course> courseList2 = query2.getResultList();
 		System.out.println("JPQL selectWhereNamedQueries() >> select_where_attribute_named_query");
+		courseList2.forEach(c -> System.out.println(c));
+		System.out.println();
+	}
+	
+	public void selectNativeQuery() {
+		Query query = entityManager.createNativeQuery("Select * from Course", Course.class);
+		List<?> courseList = query.getResultList();
+		System.out.println("JPQL selectNativeQuery()");
+		courseList.forEach(course -> System.out.println(course));
+		System.out.println();
+	}
+	
+	public void selectNamedNativeQuery() {
+		TypedQuery<Course> query = entityManager.createNamedQuery("Course.select_named_native_query", Course.class);
+		List<Course> courseList = query.getResultList();
+		System.out.println("JPQL selectNamedNativeQuery()");
+		courseList.forEach(course -> System.out.println(course));
+		System.out.println();
+	}
+	
+	public void selectWhereNamedNativeQueries() {
+		TypedQuery<Course> query1 = entityManager.createNamedQuery("Course.select_where_questionMarked_named_native_query", Course.class);
+		query1.setParameter(1, Long.valueOf(3L)); //If I pass simple 3 (primitive int/long value) then it will error. Hence passing Long class.
+		List<Course> courseList1 = query1.getResultList();
+		System.out.println("JPQL selectWhereNamedNativeQueries() >> select_where_questionMarked_named_native_query");
+		courseList1.forEach(c -> System.out.println(c));
+		System.out.println();
+		
+		TypedQuery<Course> query2 = entityManager.createNamedQuery("Course.select_where_attribute_named_native_query", Course.class);
+		query2.setParameter("id", Long.valueOf(3L)); //If I pass simple 3 (primitive int/long value) then it will error. Hence passing Long class.
+		List<Course> courseList2 = query2.getResultList();
+		System.out.println("JPQL selectWhereNamedNativeQueries() >> select_where_attribute_named_native_query");
 		courseList2.forEach(c -> System.out.println(c));
 		System.out.println();
 	}

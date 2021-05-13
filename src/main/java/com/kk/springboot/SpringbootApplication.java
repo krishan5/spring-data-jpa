@@ -59,6 +59,16 @@ public class SpringbootApplication implements CommandLineRunner {
 		courseRepoJpql.selectByTypeAndWhere();
 		courseRepoJpql.selectNamedQuery();
 		courseRepoJpql.selectWhereNamedQueries();
+		
+		//Native Queries
+		
+		courseRepoJpql.selectNativeQuery();
+		/**
+		 * TODO : To be done as it is throwing following exception :
+		 * Caused by: java.lang.IllegalArgumentException: java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+		 */
+		//courseRepoJpql.selectNamedNativeQuery();
+		//courseRepoJpql.selectWhereNamedNativeQueries();
 	}
 
 }
