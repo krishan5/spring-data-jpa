@@ -2,6 +2,7 @@ package com.kk.springboot.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Student {
 	/**
 	 * By @OneToOne, PASSPORT_ID column will be added in STUDENT table along with foreign key.
 	 */
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
 	
 	public Student() {
@@ -47,5 +48,8 @@ public class Student {
 
 	public long getId() {
 		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 }

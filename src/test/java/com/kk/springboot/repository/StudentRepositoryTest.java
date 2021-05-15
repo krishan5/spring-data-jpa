@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +26,7 @@ public class StudentRepositoryTest {
 	public void testFindById() {
 		Student student = studentRepo.findById(1);
 		assertEquals("Recker", student.getName());
+		//assertEquals("Z235P3421", student.getPassport().getNumber());
 	}
 	
 	@Test
@@ -60,6 +65,23 @@ public class StudentRepositoryTest {
 		student = studentRepo.saveStudentWithPassport(student, passport);
 		assertEquals("Tony Stark", student.getName());
 		assertEquals("P134N0337", student.getPassport().getNumber());
+	}
+	
+	@Test
+	@DirtiesContext
+	@Transactional
+	/**
+	 * As we are using @OneToOne(fetch = FetchType.LAZY) on Passport variable in Student class,
+	 * when we hit student.getPassport() then it needs transaction to be exist there
+	 * otherwise it will throw :
+	 * org.hibernate.LazyInitializationException: could not initialize proxy [com.kk.springboot.entity.Passport#1] - no Session
+	 * 
+	 * Note : Here session is Hibernate session.
+	 */
+	public void testFindStudentWithPassport() {
+		Student student = studentRepo.findStudentWithPassport(1);
+		assertEquals("Recker", student.getName());
+		assertEquals("Z235P3421", student.getPassport().getNumber());
 	}
 	
 }
