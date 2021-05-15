@@ -84,4 +84,13 @@ public class StudentRepositoryTest {
 		assertEquals("Z235P3421", student.getPassport().getNumber());
 	}
 	
+	@Test
+	@DirtiesContext
+	@Transactional
+	public void testFindStudentUsingPassportOnBehalfOfBidirectional() {
+		Student student = studentRepo.findStudentUsingPassportOnBehalfOfBidirectional(1);
+		assertEquals("Recker", student.getName());
+		assertEquals("Z235P3421", student.getPassport().getNumber());
+	}
+	
 }

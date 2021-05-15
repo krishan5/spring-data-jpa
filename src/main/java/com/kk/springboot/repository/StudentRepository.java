@@ -1,6 +1,8 @@
 package com.kk.springboot.repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class StudentRepository {
 		return student;
 	}
 	
-	public Student findStudentWithPassport(long id) {
+	public Student findStudentWithPassport(long studentId) {
 		/**
 		 * If no fetchtype set on @OneToOne mapping then it will fetch EAGER by default.
 		 * Which means hibernate will perform join operation between STUDENT and PASSPORT
@@ -70,14 +72,35 @@ public class StudentRepository {
 		 * To fetch Student data, normal select query with WHERE condition will be executed on STUDENT table.
 		 * Same for passport, normal select query with WHERE condition will be executed on PASSPORT table.
 		 */
-		Student student = entityManager.find(Student.class, id);
+		Student student = entityManager.find(Student.class, studentId);
 		
 		/**
 		 * Here select query will be executed as explained above.
+		 * Hibernate knows Passport details are not fetched yet that's why it fetch its data in lazy mode.
 		 */
 		student.getPassport();
 		
 		return student;
 	}
+	
+	public Student findStudentUsingPassportOnBehalfOfBidirectional(long passportId) {
+		/**
+		 * We are able fetch student object on behalf of passport id just because of Bidirectional @OneToOne used 
+		 * which means @OneToOne annotation on both classes i.e. Student and Passport.
+		 * and both classes containing each other variable :
+		 * Student class has passport variable and Passport class has student variable.
+		 * 
+		 * By doing this PASSPORT_ID column will be added in STUDENT table and STUDENT_ID column in PASSPORT table.
+		 * 
+		 * But we don't need this, we only want PASSPORT_ID column in STUDENT table. To do this, "mappedBy"
+		 * attribute is added in Passport class like :
+		 * @OneToOne(fetch = FetchType.LAZY, mappedBy = "passport")
+		 */
+		Passport passport = entityManager.find(Passport.class, passportId);
+		Student student = passport.getStudent();
+		return student;
+	}
+	
+	
 
 }
