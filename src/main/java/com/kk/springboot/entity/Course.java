@@ -1,5 +1,7 @@
 package com.kk.springboot.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -46,6 +49,9 @@ public class Course {
 	
 	private String name;
 	
+	@OneToMany(mappedBy = "course")
+	private List<Review> reviews;
+	
 	protected Course() {
 		
 	}
@@ -66,6 +72,13 @@ public class Course {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public void addReview(Review review) {
+		reviews.add(review);
+	}
+	public void removeReview(Review review) {
+		reviews.remove(review);
 	}
 
 	@Override
