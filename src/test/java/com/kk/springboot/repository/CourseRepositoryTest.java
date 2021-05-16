@@ -3,6 +3,11 @@ package com.kk.springboot.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.kk.springboot.entity.Course;
+import com.kk.springboot.entity.Review;
+import com.kk.springboot.entity.ReviewRating;
 
 @SpringBootTest
 public class CourseRepositoryTest {
@@ -56,6 +63,21 @@ public class CourseRepositoryTest {
 	void testDeleteById() {
 		courseRepo.deleteById(2);
 		assertNull(courseRepo.findById(2));
+	}
+	
+	@Test
+	@DirtiesContext
+	@Transactional
+	void testAddReviewsInCourse() {
+		//Creating reviews to add
+		Review review1 = new Review("Great explanation and widely covered topics.", ReviewRating.VERY_GOOD.getValue());
+		Review review2 = new Review("I'm beginner. It's too much information for me.", ReviewRating.AVERAGE.getValue());
+		
+		List<Review> newReviewList = new ArrayList<>();
+		newReviewList.add(review1);
+		newReviewList.add(review2);
+		
+		courseRepo.addReviewsInCourse(2, newReviewList);
 	}
 	
 }

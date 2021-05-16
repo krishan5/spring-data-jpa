@@ -1,5 +1,8 @@
 package com.kk.springboot.repository;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kk.springboot.entity.Course;
+import com.kk.springboot.entity.Review;
 
 @Repository
 @Transactional //Use it when perform delete/update/save operations so that we can have rollback support in case of any exception.
@@ -124,6 +128,21 @@ public class CourseRepository {
 		 * It runs "select" query to fetch latest changes from DB/Persistence context.
 		 */
 		entityManager.refresh(dockerCourse); //You will see changes in DB >> Docker course - updated before flush()
+	}
+	
+	public void addReviewsInCourse(long courseId, List<Review> newReviewList) {
+		Course course = findById(courseId);
+		//List<Review> reviewList = course.getReviews();
+		
+		newReviewList
+			.forEach(review -> {
+				//Setting the relationship
+				course.addReview(review);
+				review.setCourse(course);
+				
+				//Save them to DB
+				entityManager.persist(review);
+			});
 	}
 	
 }

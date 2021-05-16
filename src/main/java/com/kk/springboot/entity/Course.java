@@ -1,8 +1,10 @@
 package com.kk.springboot.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +51,7 @@ public class Course {
 	
 	private String name;
 	
-	@OneToMany(mappedBy = "course")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Review> reviews;
 	
 	protected Course() {
@@ -74,7 +76,12 @@ public class Course {
 		this.id = id;
 	}
 	
+	public List<Review> getReviews() {
+		return this.reviews;
+	}
 	public void addReview(Review review) {
+		if(this.reviews == null)
+			reviews = new ArrayList<Review>();
 		reviews.add(review);
 	}
 	public void removeReview(Review review) {

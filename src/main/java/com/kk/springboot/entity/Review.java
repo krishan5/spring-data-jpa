@@ -1,6 +1,7 @@
 package com.kk.springboot.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,18 +18,16 @@ public class Review {
 	
 	private int rating;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Course course;
 
 	public Review() {
 		
 	}
 	
-	public Review(String description, int rating, Course course) {
-		super();
+	public Review(String description, int rating) {
 		this.description = description;
 		this.rating = rating;
-		this.course = course;
 	}
 
 	public long getId() {
