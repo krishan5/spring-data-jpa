@@ -18,6 +18,7 @@ public class Review {
 	
 	private int rating;
 	
+	//By default fetch strategy is EAGER for @OneToMany relation
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Course course;
 
@@ -60,6 +61,11 @@ public class Review {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	@Override
+	public String toString() {
+		return "Review [id=" + id + ", description=" + description + ", rating=" + rating + "]";
 	}
 	
 }

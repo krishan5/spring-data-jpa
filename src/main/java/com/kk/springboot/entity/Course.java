@@ -51,7 +51,8 @@ public class Course {
 	
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
+	//By default fetch strategy is LAZY for @OneToMany relation
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
 	private List<Review> reviews;
 	
 	protected Course() {

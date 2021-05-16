@@ -54,15 +54,15 @@ public class CourseRepositoryTest {
 		assertEquals("Spring Webflux course (updated in test)", course.getName());
 	}
 	
-	@Test
+	//@Test
 	@DirtiesContext
 	/**
 	 * Problem : Following test will actually delete the value from DB which can be used by another test or application. 
 	 * @DirtiesContext tells spring to recover the updated/deleted value after executing the test.
 	 */
 	void testDeleteById() {
-		courseRepo.deleteById(2);
-		assertNull(courseRepo.findById(2));
+		courseRepo.deleteById(3);
+		assertNull(courseRepo.findById(3));
 	}
 	
 	@Test
@@ -78,6 +78,11 @@ public class CourseRepositoryTest {
 		newReviewList.add(review2);
 		
 		courseRepo.addReviewsInCourse(2, newReviewList);
+		
+		Course course = courseRepo.findById(2);
+		List<Review> reviewList = course.getReviews();
+		reviewList.forEach(r -> System.out.println(r));
+		assertEquals(2, reviewList.size());
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.kk.springboot.repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -134,15 +133,35 @@ public class CourseRepository {
 		Course course = findById(courseId);
 		//List<Review> reviewList = course.getReviews();
 		
-		newReviewList
-			.forEach(review -> {
-				//Setting the relationship
-				course.addReview(review);
-				review.setCourse(course);
-				
-				//Save them to DB
-				entityManager.persist(review);
-			});
+		for(Review review : newReviewList) {
+			//Setting the relationship
+			course.addReview(review);
+			review.setCourse(course);
+			
+			/**
+			 * Nothing following is required in case of EAGER initialization in 
+			 * Course.java > @OneToMany relation on List<Review> 
+			 */
+			//entityManager.merge(course);
+			//entityManager.persist(review);
+		}
+		
+//		newReviewList
+//			.forEach(review -> {
+//				//Setting the relationship
+//				course.addReview(review);
+//				review.setCourse(course);
+//				
+//				//Save them to DB
+//				/**
+//		         * In case both classes has LAZY initialization : 
+//				 * It works fine in case of merge(course) because when we call course.getReviews() it returns 2 reviews.
+//				 * But, it not works fine in case of persist(review) because when we call course.getReviews() it returns 4 reviews,
+//				 * each review with its duplicate entry.
+//				 * TODO: I don't know why this is happening.
+//				 */
+//				entityManager.merge(course);
+//			});
 	}
 	
 }

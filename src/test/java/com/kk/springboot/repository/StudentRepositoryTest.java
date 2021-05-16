@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
