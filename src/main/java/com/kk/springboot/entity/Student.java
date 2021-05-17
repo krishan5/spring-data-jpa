@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -32,6 +34,11 @@ public class Student {
 	 * Explanation of @ManyToMany is explained in Course class.
 	 */
 	@ManyToMany
+	@JoinTable(
+		name = "STUDENT_COURSE", //This will be the name of table which was earlier STUDENT_COURSES
+		joinColumns = @JoinColumn(name = "STUDENT_ID"), //This will be the name of column which was earlier STUDENT_ID. JoinColumns should be used for this class column.
+		inverseJoinColumns = @JoinColumn(name = "COURSE_ID") //This will be the name of column which was earlier COURSES_ID. InverseJoinColumns should be used for another class column.
+	)
 	private List<Course> courses;
 	
 	public Student() {
