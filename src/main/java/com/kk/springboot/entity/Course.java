@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -55,6 +56,19 @@ public class Course {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
 	private List<Review> reviews;
 	
+	/**
+	 * It will create new table in DB with name : COURSE_STUDENTS table having COURSE_ID and STUDENTS_ID columns
+	 * to support ManyToMany relation between each other
+	 * where left side of table name COURSE_STUDENTS is this class name and right side of table name is variable name in this class i.e. students.
+	 * In case we support bidirectional relation of it i.e. @ManyToMany in Student class on List<Course>, then 
+	 * one more table will be created with name : STUDENT_COURSES table having STUDENT_ID and COURSES_ID columns.
+	 * 
+	 * Due to having @ManyToMany annotation on both classes, it will create two tables for us.
+	 * But we need only 1 of it.
+	 */
+	@ManyToMany
+	private List<Student> students;
+	
 	protected Course() {
 		
 	}
@@ -87,6 +101,18 @@ public class Course {
 	}
 	public void removeReview(Review review) {
 		reviews.remove(review);
+	}
+	
+	public List<Student> getStudents() {
+		return students;
+	}
+	public void addStudent(Student student) {
+		if(this.students == null)
+			students = new ArrayList<Student>();
+		students.add(student);
+	}
+	public void removeStudent(Student student) {
+		students.remove(student);
 	}
 
 	@Override

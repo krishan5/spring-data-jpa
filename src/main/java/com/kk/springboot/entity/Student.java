@@ -1,11 +1,15 @@
 package com.kk.springboot.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -23,6 +27,12 @@ public class Student {
 	 */
 	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
+	
+	/**
+	 * Explanation of @ManyToMany is explained in Course class.
+	 */
+	@ManyToMany
+	private List<Course> courses;
 	
 	public Student() {
 		
@@ -52,4 +62,22 @@ public class Student {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+	public void addCourse(Course course) {
+		if(this.courses != null)
+			courses = new ArrayList<Course>();
+		courses.add(course);
+	}
+	public void removeCourse(Course course) {
+		courses.remove(course);
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", passport=" + passport.getId() + "]";
+	}
+	
 }
