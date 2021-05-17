@@ -65,8 +65,11 @@ public class Course {
 	 * 
 	 * Due to having @ManyToMany annotation on both classes, it will create two tables for us.
 	 * But we need only 1 of it.
+	 * 
+	 * To get rid of it, simply use mappedBy anyone class. Lets do it here.
+	 * By doing this, only STUDENT_COURSES table will be created with COURSES_ID and STUDENTS_ID columns in it.
 	 */
-	@ManyToMany
+	@ManyToMany(mappedBy = "courses")
 	private List<Student> students;
 	
 	protected Course() {
