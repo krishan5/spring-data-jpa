@@ -65,7 +65,7 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [id=" + id + ", description=" + description + ", rating=" + rating + "]";
+		return "Review [id=" + id + ", description=" + description + ", rating=" + rating + ", course=" + course.getId() + "]";
 	}
-	
+
 }

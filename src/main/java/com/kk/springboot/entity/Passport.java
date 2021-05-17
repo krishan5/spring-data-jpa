@@ -62,4 +62,10 @@ public class Passport {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+
+	@Override
+	public String toString() {
+		return "Passport [id=" + id + ", number=" + number + ", student=" + student.getId() + "]";
+	}
+	
 }
