@@ -69,6 +69,7 @@ public class Course {
 	 * To get rid of it, simply use mappedBy anyone class. Lets do it here.
 	 * By doing this, only STUDENT_COURSES table will be created with COURSES_ID and STUDENTS_ID columns in it.
 	 */
+	//By default fetch strategy is LAZY for @ManyToMany relation
 	@ManyToMany(mappedBy = "courses")
 	private List<Student> students;
 	

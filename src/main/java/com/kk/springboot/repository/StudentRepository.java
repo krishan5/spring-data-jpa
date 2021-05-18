@@ -101,6 +101,11 @@ public class StudentRepository {
 		return student;
 	}
 	
+	public Student findStudentAndItsCourses(long studentId) {
+		Student student = entityManager.find(Student.class, studentId);
+		return student;
+	}
+	
 	
 
 }

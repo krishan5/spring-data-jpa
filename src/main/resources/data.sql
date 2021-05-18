@@ -15,3 +15,9 @@ insert into student(name, passport_id) values('Recker', 1);
 insert into student(name, passport_id) values('Nikolai', 2);
 insert into student(name, passport_id) values('Raiden', 3);
 insert into student(name, passport_id) values('Delete Me', 4);
+
+insert into student_course(student_id, course_id) values(1, 1);
+insert into student_course(student_id, course_id) values(1, 2);
+insert into student_course(student_id, course_id) values(1, 3);
+insert into student_course(student_id, course_id) values(3, 2);
+insert into student_course(student_id, course_id) values(3, 3);

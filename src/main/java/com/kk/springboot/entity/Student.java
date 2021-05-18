@@ -33,6 +33,7 @@ public class Student {
 	/**
 	 * Explanation of @ManyToMany is explained in Course class.
 	 */
+	//By default fetch strategy is LAZY for @ManyToMany relation
 	@ManyToMany
 	@JoinTable(
 		name = "STUDENT_COURSE", //This will be the name of table which was earlier STUDENT_COURSES

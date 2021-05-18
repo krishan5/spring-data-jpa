@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import com.kk.springboot.entity.Course;
 import com.kk.springboot.entity.Passport;
 import com.kk.springboot.entity.Student;
 
@@ -89,6 +92,21 @@ public class StudentRepositoryTest {
 		Student student = studentRepo.findStudentUsingPassportOnBehalfOfBidirectional(1);
 		assertEquals("Recker", student.getName());
 		assertEquals("Z235P3421", student.getPassport().getNumber());
+	}
+	
+	@Test
+	@Transactional
+	public void testFindStudentAndItsCourses() {
+		Student student = studentRepo.findStudentAndItsCourses(1);
+		assertEquals("Recker", student.getName());
+		
+		/**
+		 * This will perform join STUDENT_COURSE table with COURSE table where student_id = 1
+		 * due to LAZY fetching.
+		 * This will also fetch data from REVIEW table due to EAGER fetching type on List<Review> in Course class.
+		 */
+		List<Course> courseList = student.getCourses();
+		assertEquals(3, courseList.size());
 	}
 	
 }
