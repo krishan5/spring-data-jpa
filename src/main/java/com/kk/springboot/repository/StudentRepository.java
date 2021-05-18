@@ -1,13 +1,14 @@
 package com.kk.springboot.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kk.springboot.entity.Course;
 import com.kk.springboot.entity.Passport;
 import com.kk.springboot.entity.Student;
 
@@ -106,6 +107,13 @@ public class StudentRepository {
 		return student;
 	}
 	
-	
+	public void insertStudentAndItsCourses(Student student, List<Course> courseList) {
+		entityManager.persist(student);
+		courseList.forEach(course -> {
+			student.addCourse(course);
+			course.addStudent(student);
+			entityManager.persist(course);
+		});
+	}
 
 }

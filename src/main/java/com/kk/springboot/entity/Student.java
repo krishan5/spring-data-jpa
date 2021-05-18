@@ -75,7 +75,7 @@ public class Student {
 		return courses;
 	}
 	public void addCourse(Course course) {
-		if(this.courses != null)
+		if(this.courses == null)
 			courses = new ArrayList<Course>();
 		courses.add(course);
 	}

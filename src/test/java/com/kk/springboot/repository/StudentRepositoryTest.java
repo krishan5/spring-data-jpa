@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -107,6 +108,26 @@ public class StudentRepositoryTest {
 		 */
 		List<Course> courseList = student.getCourses();
 		assertEquals(3, courseList.size());
+	}
+	
+	@Test
+	@DirtiesContext
+	@Transactional
+	public void testInsertStudentAndItsCourses() {
+		Student student = new Student("Tony Stark");
+		Passport passport = new Passport("P134N0337");
+		student.setPassport(passport);
+		Course course1 = new Course("New course1");
+		Course course2 = new Course("New course2");
+		List<Course> courseList = new ArrayList<>();
+		courseList.add(course1);
+		courseList.add(course2);
+		studentRepo.insertStudentAndItsCourses(student, courseList);
+		
+		Student student5 = studentRepo.findById(5);
+		List<Course> courses = student5.getCourses();
+		courses.forEach(course -> System.out.println(course));
+		assertEquals(2, courses.size());
 	}
 	
 }
