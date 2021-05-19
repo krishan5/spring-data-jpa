@@ -1,5 +1,7 @@
 package com.kk.springboot;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.kk.springboot.entity.Course;
+import com.kk.springboot.entity.Employee;
+import com.kk.springboot.entity.FullTimeEmployee;
+import com.kk.springboot.entity.PartTimeEmployee;
 import com.kk.springboot.repository.CourseRepository;
 import com.kk.springboot.repository.CourseRepositoryUsingJPQL;
+import com.kk.springboot.repository.EmployeeRepository;
 
 @SpringBootApplication
 public class SpringbootApplication implements CommandLineRunner {
@@ -21,6 +27,9 @@ public class SpringbootApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CourseRepositoryUsingJPQL courseRepoJpql;
+	
+	@Autowired
+	private EmployeeRepository empRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApplication.class, args);
@@ -64,6 +73,16 @@ public class SpringbootApplication implements CommandLineRunner {
 		//courseRepoJpql.selectNamedNativeQuery();
 		//courseRepoJpql.selectWhereNamedNativeQueries();
 		
+		//Inheritance
+		
+		Employee emp1 = new FullTimeEmployee("Emp1", new BigDecimal(1000000));
+		Employee emp2 = new PartTimeEmployee("Emp2", new BigDecimal(500));
+		empRepo.save(emp1);
+		empRepo.save(emp2);
+		Employee employee1 = empRepo.findById(1);
+		Employee employee2 = empRepo.findById(2);
+		System.out.println(employee1);
+		System.out.println(employee2);
 	}
 
 }
