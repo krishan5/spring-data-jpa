@@ -1,6 +1,7 @@
 package com.kk.springboot.entity;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +15,41 @@ import javax.persistence.InheritanceType;
  * EMPLOYEE table will be created with DTYPE, ID, NAME, SALARY, HOURLY_WAGE columns
  * 
  * where 
- * DTYPE : represents type of row entry (i.e. FullTimeEmployee or PartTimeEmployee) because these two are child classes of Employee class.
+ * DTYPE : It is called Discriminator column which represents type of row entry 
+ * (i.e. FullTimeEmployee or PartTimeEmployee) because these two are child classes of Employee class.
  * ID, NAME : are columns for Employee class > id and name variables
  * SALARY : column for FullTimeEmployee class > salary variable
  * HOURLY_WAGE : column for PartTimeEmployee class > hourlyWage variable
  */
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "EMPLOYEE_TYPE") //It renames DTYPE to EMPLOYEE_TYPE column
+
+/**
+ * In case of @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) :
+ * FULL_TIME_EMPLOYEE and PART_TIME_EMPLOYEE two tables will be created.
+ * In short a table per concrete class will be created and we have FullTimeEmployee and PartTimeEmployee are the only concrete classes.
+ * 
+ * Columns will be ID, NAME, SALARY in FULL_TIME_EMPLOYEE table.
+ * Columns will be ID, NAME, HOURLY_WAGE in PART_TIME_EMPLOYEE table.
+ * 
+ * Notice : No DTYPE is there just because tables are already divided as per type and 
+ * we don't need this column to identify which row entry is of which employee type.
+ */
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Employee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	/**
+	 * In case of @Inheritance(strategy = InheritanceType.SINGLE_TABLE) :
+	 * We can use @GeneratedValue(strategy = GenerationType.INDENTITY or AUTO)
+	 * because it that case we have single table where ID will be incremented automatically.
+	 * 
+	 * In case of @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) :
+	 * If we use @GeneratedValue(strategy = GenerationType.INDENTITY), then following exception will be thrown :
+	 * Cannot use identity column key generation with <union-subclass> mapping.
+	 * So the preferred option is AUTO.
+	 */
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(nullable = false)
