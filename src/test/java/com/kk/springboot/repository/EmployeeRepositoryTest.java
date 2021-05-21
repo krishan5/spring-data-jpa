@@ -26,8 +26,18 @@ public class EmployeeRepositoryTest {
 		Employee emp2 = new PartTimeEmployee("Emp2", new BigDecimal(500));
 		empRepo.save(emp1);
 		empRepo.save(emp2);
-		Employee employee1 = empRepo.findById(1);
-		Employee employee2 = empRepo.findById(2);
+		
+		/**
+		 * Use this way of fetching when @Inheritance is implemented over Employee class.
+		 */
+		//Employee employee1 = empRepo.findById(1);
+		//Employee employee2 = empRepo.findById(2);
+		
+		/**
+		 * Use this way of fetching when @MappedSuperclass is implemented over Employee class.
+		 */
+		Employee employee1 = empRepo.findFullTimeEmployeeById(1);
+		Employee employee2 = empRepo.findPartTimeEmployeeById(2);
 		assertEquals("Emp1", employee1.getName());
 		assertEquals("Emp2", employee2.getName());
 	}

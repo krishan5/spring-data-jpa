@@ -8,8 +8,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
-@Entity
+//@Entity
+/**
+ * Separate table will be created for concrete child classes :
+ * FULL_TIME_EMPLOYEE and PART_TIME_EMPLOYEE two tables will be created exact like in way of InheritanceType.TABLE_PER_CLASS.
+ * 
+ * Columns will be ID, NAME, SALARY in FULL_TIME_EMPLOYEE table.
+ * Columns will be ID, NAME, HOURLY_WAGE in PART_TIME_EMPLOYEE table.
+ * 
+ * Explanation : This (Employee) class is like common definition, other that that there is no relationship between
+ * subclasses. Separate tables will be created. So there is no Employee relation i.e. no inheritance hierarchy at all.
+ * MappedSuperclass completely eliminates the inheritance hierarchy between them. This is us who are defining common 
+ * things in this class which will be used in child classes tables, other than that there is no relationship between them.
+ * 
+ * In case we try to fetch details on behalf of Employee entity instead of FullTimeEmployee or PartTimeEmployee entity
+ * while fetching/saving operation we will face following exceptions :
+ * JPA Eg: entityManager.createQuery("select e from Employee e", Employee.class); // Exception >> Employee entity is not mapped 
+ * Hibernate Eg: entityManager.find(Employee.class, id); //Exception >> Unable to locate persister: com.kk.springboot.entity.Employee
+ * 
+ * If we use it along with @Entity annotation then we will face this exception :
+ * An entity cannot be annotated with both @Entity and @MappedSuperclass
+ */
+@MappedSuperclass
 /**
  * In case of @Inheritance(strategy = InheritanceType.SINGLE_TABLE) :
  * Definition : A single table per class hierarchy.
@@ -48,7 +70,7 @@ import javax.persistence.InheritanceType;
  * 
  * Notice : ID column is part of both concrete classes so that it perform JOIN operation.
  */
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Employee {
 	
 	@Id
