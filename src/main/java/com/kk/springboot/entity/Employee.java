@@ -12,6 +12,7 @@ import javax.persistence.InheritanceType;
 @Entity
 /**
  * In case of @Inheritance(strategy = InheritanceType.SINGLE_TABLE) :
+ * Definition : A single table per class hierarchy.
  * EMPLOYEE table will be created with DTYPE, ID, NAME, SALARY, HOURLY_WAGE columns
  * 
  * where 
@@ -26,7 +27,7 @@ import javax.persistence.InheritanceType;
 
 /**
  * In case of @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) :
- * FULL_TIME_EMPLOYEE and PART_TIME_EMPLOYEE two tables will be created.
+ * FULL_TIME_EMPLOYEE and PART_TIME_EMPLOYEE these two tables will be created.
  * In short a table per concrete class will be created and we have FullTimeEmployee and PartTimeEmployee are the only concrete classes.
  * 
  * Columns will be ID, NAME, SALARY in FULL_TIME_EMPLOYEE table.
@@ -35,7 +36,19 @@ import javax.persistence.InheritanceType;
  * Notice : No DTYPE is there just because tables are already divided as per type and 
  * we don't need this column to identify which row entry is of which employee type.
  */
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
+/**
+ * In case of @Inheritance(strategy = InheritanceType.JOINED) :
+ * EMPLOYEE, FULL_TIME_EMPLOYEE and PART_TIME_EMPLOYEE these three tables will be created.
+ * 
+ * Columns will be ID, NAME in EMPLOYEE table.
+ * Columns will be SALARY, ID in FULL_TIME_EMPLOYEE table.
+ * Columns will be HOURLY_WAGE, ID in PART_TIME_EMPLOYEE table.
+ * 
+ * Notice : ID column is part of both concrete classes so that it perform JOIN operation.
+ */
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Employee {
 	
 	@Id
