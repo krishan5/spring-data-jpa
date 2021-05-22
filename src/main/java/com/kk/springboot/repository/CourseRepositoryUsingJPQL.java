@@ -103,4 +103,12 @@ public class CourseRepositoryUsingJPQL {
 		System.out.println();
 	}
 	
+	public void selectCoursesWithoutStudent() {
+		TypedQuery<Course> courseListWithoutStudentQuery = entityManager.createQuery("select c from Course c where c.students is empty", Course.class);
+		List<Course> courseListWithoutStudent = courseListWithoutStudentQuery.getResultList();
+		System.out.println("JPQL selectCoursesWithoutStudent()");
+		courseListWithoutStudent.forEach(c -> System.out.println(c));
+		System.out.println();
+	}
+	
 }

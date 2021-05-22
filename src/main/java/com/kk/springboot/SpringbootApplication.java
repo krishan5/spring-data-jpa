@@ -73,6 +73,8 @@ public class SpringbootApplication implements CommandLineRunner {
 		//courseRepoJpql.selectNamedNativeQuery();
 		//courseRepoJpql.selectWhereNamedNativeQueries();
 		
+		courseRepoJpql.selectCoursesWithoutStudent();
+		
 		//Inheritance
 		
 		Employee emp1 = new FullTimeEmployee("Emp1", new BigDecimal(1000000));
