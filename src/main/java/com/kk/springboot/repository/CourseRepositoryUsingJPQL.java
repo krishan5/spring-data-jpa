@@ -7,6 +7,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -108,6 +110,72 @@ public class CourseRepositoryUsingJPQL {
 		List<Course> courseListWithoutStudent = courseListWithoutStudentQuery.getResultList();
 		System.out.println("JPQL selectCoursesWithoutStudent()");
 		courseListWithoutStudent.forEach(c -> System.out.println(c));
+		System.out.println();
+	}
+	
+	public void selectCoursesWithAtleastTwoStudent() {
+		TypedQuery<Course> courseListWithAtleastTwoStudentQuery = entityManager.createQuery("select c from Course c where size(c.students) >= 2", Course.class);
+		List<Course> courseListWithAtleastTwoStudent = courseListWithAtleastTwoStudentQuery.getResultList();
+		System.out.println("JPQL selectCoursesWithAtleastTwoStudent()");
+		courseListWithAtleastTwoStudent.forEach(c -> System.out.println(c));
+		System.out.println();
+	}
+	
+	public void selectCoursesOrderedByStudentSize() {
+		TypedQuery<Course> courseListOrderedByStudentSizeQuery = entityManager.createQuery("select c from Course c order by size(c.students) desc", Course.class);
+		List<Course> courseListOrderedByStudentSize = courseListOrderedByStudentSizeQuery.getResultList();
+		System.out.println("JPQL selectCoursesOrderedByStudentSize()");
+		courseListOrderedByStudentSize.forEach(c -> System.out.println(c));
+		System.out.println();
+	}
+	
+	/**
+	 * Three types of JOIN :
+	 * 1. JOIN : Join Course and Student tables. If course is not linked with any student then that course will not be fetched.
+	 * 2. LEFT JOIN : Join Course and Student tables. Also return course which is not linked with any student (as NULL).
+	 * 3. CROSS JOIN : Join Course and Student tables. It return all possible combination of course (n records) and student (m records). n * m records will be fetched.
+	 */
+	public void selectCoursesJoinStudent() {
+		Query coursesJoinStudentQuery = entityManager.createQuery("select c, s from Course c JOIN c.students s");
+		List<Object[]> resultSet = coursesJoinStudentQuery.getResultList();
+		System.out.println("JPQL selectCoursesJoinStudent()");
+		for(Object[] result : resultSet) {
+			System.out.println("Course : " + result[0]);
+			System.out.println("Student : " + result[1]);
+		}
+		System.out.println();
+	}
+	
+	/**
+	 * Three types of JOIN :
+	 * 1. JOIN : Join Course and Student tables. If course is not linked with any student then that course will not be fetched.
+	 * 2. LEFT JOIN : Join Course and Student tables. Also return course which is not linked with any student (as NULL).
+	 * 3. CROSS JOIN : Join Course and Student tables. It return all possible combination of course (n records) and student (m records). n * m records will be fetched.
+	 */
+	public void selectCoursesLeftJoinStudent() {
+		Query coursesLeftJoinStudentQuery = entityManager.createQuery("select c, s from Course c LEFT JOIN c.students s");
+		List<Object[]> resultSet = coursesLeftJoinStudentQuery.getResultList();
+		System.out.println("JPQL selectCoursesLeftJoinStudent()");
+		for(Object[] result : resultSet) {
+			System.out.println("Course : " + result[0]);
+			System.out.println("Student : " + result[1]);
+		}
+		System.out.println();
+	}
+	
+	/**
+	 * Three types of JOIN :
+	 * 1. JOIN : Join Course and Student tables. If course is not linked with any student then that course will not be fetched.
+	 * 2. LEFT JOIN : Join Course and Student tables. Also return course which is not linked with any student (as NULL).
+	 * 3. CROSS JOIN : Join Course and Student tables. It return all possible combination of course (n records) and student (m records). n * m records will be fetched.
+	 */
+	public void selectCoursesCrossJoinStudent() {
+		Query coursesCrossJoinStudentQuery = entityManager.createQuery("select c, s from Course c, Student s");
+		List<Object[]> resultSet = coursesCrossJoinStudentQuery.getResultList();
+		System.out.println("JPQL selectCoursesCrossJoinStudent()");
+		for(Object[] result : resultSet) {
+			System.out.println("Course : " + result[0] + " ::::: Student : " + result[1]);
+		}
 		System.out.println();
 	}
 	

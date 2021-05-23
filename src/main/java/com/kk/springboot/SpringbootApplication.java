@@ -74,6 +74,11 @@ public class SpringbootApplication implements CommandLineRunner {
 		//courseRepoJpql.selectWhereNamedNativeQueries();
 		
 		courseRepoJpql.selectCoursesWithoutStudent();
+		courseRepoJpql.selectCoursesWithAtleastTwoStudent();
+		courseRepoJpql.selectCoursesOrderedByStudentSize();
+		courseRepoJpql.selectCoursesJoinStudent();
+		courseRepoJpql.selectCoursesLeftJoinStudent();
+		courseRepoJpql.selectCoursesCrossJoinStudent();
 		
 		//Inheritance
 		
