@@ -138,8 +138,7 @@ public class CourseRepositoryUsingJPQL {
 		List<Object[]> resultSet = coursesJoinStudentQuery.getResultList();
 		System.out.println("JPQL selectCoursesJoinStudent()");
 		for(Object[] result : resultSet) {
-			System.out.println("Course : " + result[0]);
-			System.out.println("Student : " + result[1]);
+			System.out.println("Course : " + result[0] + " ::::: Student : " + result[1]);
 		}
 		System.out.println();
 	}
@@ -155,8 +154,7 @@ public class CourseRepositoryUsingJPQL {
 		List<Object[]> resultSet = coursesLeftJoinStudentQuery.getResultList();
 		System.out.println("JPQL selectCoursesLeftJoinStudent()");
 		for(Object[] result : resultSet) {
-			System.out.println("Course : " + result[0]);
-			System.out.println("Student : " + result[1]);
+			System.out.println("Course : " + result[0] + " ::::: Student : " + result[1]);
 		}
 		System.out.println();
 	}
@@ -171,6 +169,16 @@ public class CourseRepositoryUsingJPQL {
 		Query coursesCrossJoinStudentQuery = entityManager.createQuery("select c, s from Course c, Student s");
 		List<Object[]> resultSet = coursesCrossJoinStudentQuery.getResultList();
 		System.out.println("JPQL selectCoursesCrossJoinStudent()");
+		for(Object[] result : resultSet) {
+			System.out.println("Course : " + result[0] + " ::::: Student : " + result[1]);
+		}
+		System.out.println();
+	}
+	
+	public void selectCoursesLeftJoinStudentWherePassportLike() {
+		Query coursesLeftJoinStudentWherePassportLikeQuery = entityManager.createQuery("select c, s from Course c LEFT JOIN c.students s where s.passport.number like '%235%'");
+		List<Object[]> resultSet = coursesLeftJoinStudentWherePassportLikeQuery.getResultList();
+		System.out.println("JPQL selectCoursesLeftJoinStudentWherePassportLike()");
 		for(Object[] result : resultSet) {
 			System.out.println("Course : " + result[0] + " ::::: Student : " + result[1]);
 		}

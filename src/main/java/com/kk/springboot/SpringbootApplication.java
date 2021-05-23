@@ -79,6 +79,7 @@ public class SpringbootApplication implements CommandLineRunner {
 		courseRepoJpql.selectCoursesJoinStudent();
 		courseRepoJpql.selectCoursesLeftJoinStudent();
 		courseRepoJpql.selectCoursesCrossJoinStudent();
+		courseRepoJpql.selectCoursesLeftJoinStudentWherePassportLike();
 		
 		//Inheritance
 		
