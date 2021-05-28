@@ -1,5 +1,6 @@
 package com.kk.springboot.repository;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -21,6 +22,13 @@ public class CourseSpringDataRepositoryTest {
 		Optional<Course> courseOptional = courseSpringDataRepo.findById(1L);
 		System.out.println("testFindById() >> " + courseOptional.get());
 		assertTrue(courseOptional.isPresent());
+	}
+	
+	@Test
+	public void testCourseNotPresent() {
+		Optional<Course> courseOptional = courseSpringDataRepo.findById(99L);
+		System.out.println("testCourseNotPresent() >> " + courseOptional.isPresent());
+		assertFalse(courseOptional.isPresent());
 	}
 	
 }
