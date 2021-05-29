@@ -9,6 +9,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
@@ -41,6 +44,23 @@ public class CourseSpringDataRepositoryTest {
 		System.out.println("testCourseSort() >> ");
 		allCourseList.forEach(course -> System.out.println(course));
 		assertFalse(allCourseList.isEmpty());
+	}
+	
+	@Test
+	public void testCoursePagination() {
+		PageRequest initialPage = PageRequest.of(0, 5);
+		Page<Course> firstPage = courseSpringDataRepo.findAll(initialPage);
+		System.out.println("testCoursePagination() >> First page >> ");
+		List<Course> firstPageCourseList = firstPage.getContent();
+		firstPageCourseList.forEach(course -> System.out.println(course));
+		assertFalse(firstPageCourseList.isEmpty());
+		
+		Pageable nextPageable = initialPage.next();
+		System.out.println("testCoursePagination() >> Next page >> ");
+		Page<Course> nextPage = courseSpringDataRepo.findAll(nextPageable);
+		List<Course> nextPageCourseList = nextPage.getContent();
+		nextPageCourseList.forEach(course -> System.out.println(course));
+		assertFalse(nextPageCourseList.isEmpty());
 	}
 	
 }
