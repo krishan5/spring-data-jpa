@@ -16,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "course")
 /**
@@ -71,6 +73,7 @@ public class Course {
 	 */
 	//By default fetch strategy is LAZY for @ManyToMany relation
 	@ManyToMany(mappedBy = "courses")
+	@JsonIgnore
 	private List<Student> students;
 	
 	protected Course() {
