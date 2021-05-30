@@ -17,6 +17,11 @@ import com.kk.springboot.entity.Review;
  * @Transactional can either be set on class or on method. 
  * If it is set at class level then it means its all methods are @Transactional.
  * If it is set at method then that particular method supports @Transactional behavior.
+ * 
+ * @Transactional also supports 1st level cache by default and 1st level cache is active by default.
+ * 1st level cache is per transaction / persistence context which means when you fetch same data again and again
+ * in single transaction, it will be fetched from DB for 1st time and from cache rest of the time. 
+ * To use it effectively, the bounding of Transaction should start from then Service layer/Business layer. 
  */
 public class CourseRepository {
 	

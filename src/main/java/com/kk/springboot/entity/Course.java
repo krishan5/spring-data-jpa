@@ -3,6 +3,7 @@ package com.kk.springboot.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 	@NamedNativeQuery(name = "Course.select_where_questionMarked_named_native_query", query = "select * from Course where id = ?1"),
 	@NamedNativeQuery(name = "Course.select_where_attribute_named_native_query", query = "select * from Course where id = :id")
 })
+/**
+ * To enable L2C (Level 2 Cache or 2nd level cache), first configure it in application.properties 
+ * and then make entity class @Cacheable.
+ * By default, it takes TRUE value. 
+ */
+@Cacheable
 public class Course {
 	
 	@Id
