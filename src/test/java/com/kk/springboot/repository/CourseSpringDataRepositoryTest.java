@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,6 +63,29 @@ public class CourseSpringDataRepositoryTest {
 		List<Course> nextPageCourseList = nextPage.getContent();
 		nextPageCourseList.forEach(course -> System.out.println(course));
 		assertFalse(nextPageCourseList.isEmpty());
+	}
+	
+	@Test
+	@Transactional
+	public void testCache() {
+		System.out.println("testCache() >> Finding course 1st time.");
+		/**
+		 * If @Transactional is applied on testCache() and L2C is not configured,
+		 * then this time data will be fetched from DB and Course + classes which it has (like Review) all will be cached 
+		 * for this complete transaction and next time in same transaction it will be fetched from cache.
+		 * 
+		 * If @Transactional is not applied on testCache() and L2C is configured and only Course is made @Cacheable,
+		 * then from wherever course is fetched 1st time it will be cached on the spot and where we use it again in any
+		 * transaction you will get it from cache. But Review is not made @Cacheable so it will hit DB in every call.
+		 * 
+		 * If @Transactional is applied on testCache() and L2C is also configured and only Course is made @Cacheable
+		 * but Review is not made @Cacheable, then course will behave same as explained above but review object will be
+		 * fetched from DB in 1st time here and will be cached for this transaction, so in 2nd time review will be fetched
+		 * from cache.
+		 */
+		courseSpringDataRepo.findById(1L);
+		System.out.println("testCache() >> Finding course 2nd time.");
+		courseSpringDataRepo.findById(1L);
 	}
 	
 }
