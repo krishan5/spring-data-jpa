@@ -54,7 +54,7 @@ public class CourseRepositoryTest {
 		assertEquals("Spring Webflux course (updated in test)", course.getName());
 	}
 	
-	//@Test
+	@Test
 	@DirtiesContext
 	/**
 	 * Problem : Following test will actually delete the value from DB which can be used by another test or application. 

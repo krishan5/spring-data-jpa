@@ -1,6 +1,6 @@
-insert into course(name) values('Spring boot course');
-insert into course(name) values('Spring JPA course');
-insert into course(name) values('Spring Webflux course');
+insert into course(name, is_deleted) values('Spring boot course', false);
+insert into course(name, is_deleted) values('Spring JPA course', false);
+insert into course(name, is_deleted) values('Spring Webflux course', false);
 
 insert into review(course_id, rating, description) values(1, 4, 'Explained with real examples with easy explanation.');
 insert into review(course_id, rating, description) values(1, 5, 'Well covered topic in this course.');

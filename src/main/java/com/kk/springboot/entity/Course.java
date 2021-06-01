@@ -17,6 +17,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,6 +47,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * By default, it takes TRUE value. 
  */
 @Cacheable
+/**
+ * @SQLDelete and @Where annotations provided by Hibernate implementation, not by JPA specification.
+ * Whenever delete/remove will be execute then @SQLDelete query will run to perform soft delete.
+ * Whenever retrieving will be execute then @Where clause will be added there to not fetch deleted marked courses. 
+ */
+@SQLDelete(sql = "update course set is_deleted = true where id = ?")
+@Where(clause = "is_deleted = false")
 public class Course {
 	
 	@Id
@@ -60,6 +70,8 @@ public class Course {
 	private long id;
 	
 	private String name;
+	
+	private boolean isDeleted;
 	
 	//By default fetch strategy is LAZY for @OneToMany relation
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
