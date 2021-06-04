@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import com.kk.springboot.entity.Address;
 import com.kk.springboot.entity.Course;
 import com.kk.springboot.entity.Passport;
 import com.kk.springboot.entity.Student;
@@ -128,6 +129,17 @@ public class StudentRepositoryTest {
 		List<Course> courses = student5.getCourses();
 		courses.forEach(course -> System.out.println(course));
 		assertEquals(2, courses.size());
+	}
+	
+	@Test
+	@DirtiesContext
+	@Transactional
+	public void testPersistAddressOfStudent() {
+		Student student = studentRepo.findById(2L);
+		student.setAddress(new Address("HNo.83, AB road", "Pune", "Maharashtra", "India"));
+		student = studentRepo.save(student);
+		System.out.println("testPersistAddressOfStudent() >> " + student);
+		assertEquals("India", student.getAddress().getCountry());
 	}
 	
 }

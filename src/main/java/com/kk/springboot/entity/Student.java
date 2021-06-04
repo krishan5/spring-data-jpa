@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,9 @@ public class Student {
 		inverseJoinColumns = @JoinColumn(name = "COURSE_ID") //This will be the name of column which was earlier COURSES_ID. InverseJoinColumns should be used for another class column.
 	)
 	private List<Course> courses;
+	
+	@Embedded
+	private Address address;
 	
 	public Student() {
 		
@@ -82,7 +86,14 @@ public class Student {
 	public void removeCourse(Course course) {
 		courses.remove(course);
 	}
-
+	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", passport=" + passport.getId() + "]";
