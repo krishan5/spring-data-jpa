@@ -15,6 +15,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
@@ -50,7 +51,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * @SQLDelete and @Where annotations provided by Hibernate implementation, not by JPA specification.
  * Whenever delete/remove will be execute then @SQLDelete query will run to perform soft delete.
- * Whenever retrieving will be execute then @Where clause will be added there to not fetch deleted marked courses. 
+ * Whenever retrieving will be execute then @Where clause will be added there to not fetch deleted marked courses.
+ * 
+ * But in case of native query, it won't apply there. Remember: Native queries don't use @Where hibernate annotations.
+ * 
+ * Note : When we use @SQLDelete and @Where annotations to perform soft delete, hibernate doesn't know what SQL actually
+ * triggering from them. So the problem here is that IS_DELETED column value will be set to TRUE through @Where annotation
+ * but isDeleted variable is not updated yet in the cache and course object.
+ * To resolve this problem, use @PreRemove annotation over a method where code should written like : 
+ * this.isDeleted = true
+ * to make value updated in object level. 
  */
 @SQLDelete(sql = "update course set is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
@@ -72,6 +82,16 @@ public class Course {
 	private String name;
 	
 	private boolean isDeleted;
+	
+	/**
+	 * Specifies a callback method for the corresponding lifecycle event. This annotation may be applied to methods 
+	 * of an entity class, a mapped superclass, or a callback listener class.
+	 */
+	@PreRemove
+	public void makeDeleteTrue() {
+		System.out.println("makeDeleteTrue() callback is invoked.");
+		this.isDeleted = true;
+	}
 	
 	//By default fetch strategy is LAZY for @OneToMany relation
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
@@ -143,7 +163,7 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", name=" + name + "]";
+		return "Course [id=" + id + ", name=" + name + ", isDeleted=" + isDeleted + "]";
 	}
-	
+
 }
