@@ -86,6 +86,15 @@ public class Course {
 	/**
 	 * Specifies a callback method for the corresponding lifecycle event. This annotation may be applied to methods 
 	 * of an entity class, a mapped superclass, or a callback listener class.
+	 * 
+	 * Following are JPA entity lifecycle events :
+	 * @PrePersist - before persist is called for a new entity
+	 * @PostPersist - after persist is called for a new entity
+	 * @PreRemove - before an entity is removed
+	 * @PostRemove - after an entity has been deleted
+	 * @PreUpdate - before the update operation
+	 * @PostUpdate - after an entity is updated
+	 * @PostLoad - after an entity has been loaded
 	 */
 	@PreRemove
 	public void makeDeleteTrue() {
