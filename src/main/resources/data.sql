@@ -2,9 +2,9 @@ insert into course(name, is_deleted) values('Spring boot course', false);
 insert into course(name, is_deleted) values('Spring JPA course', false);
 insert into course(name, is_deleted) values('Spring Webflux course', false);
 
-insert into review(course_id, rating, description) values(1, 4, 'Explained with real examples with easy explanation.');
-insert into review(course_id, rating, description) values(1, 5, 'Well covered topic in this course.');
-insert into review(course_id, rating, description) values(3, 4, 'Well explained but more of theoretical knowledge sharing instead of practical.');
+insert into review(course_id, rating, description) values(1, 'GOOD', 'Explained with real examples with easy explanation.');
+insert into review(course_id, rating, description) values(1, 'VERY_GOOD', 'Well covered topic in this course.');
+insert into review(course_id, rating, description) values(3, 'GOOD', 'Well explained but more of theoretical knowledge sharing instead of practical.');
 
 insert into passport(number) values ('Z235P3421');
 insert into passport(number) values ('K521A5224');

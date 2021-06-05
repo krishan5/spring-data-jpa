@@ -41,7 +41,7 @@ public class SpringbootApplication implements CommandLineRunner {
 		//EntityManager
 		
 		Course course = courseRepo.findById(1);
-		logger.info("Course id=1 >> " + course);
+		System.out.println("Course id=1 >> " + course);
 		
 		Course savedCourse = courseRepo.save(new Course("Java 16 course"));
 		logger.info("Saved course >> " + savedCourse);

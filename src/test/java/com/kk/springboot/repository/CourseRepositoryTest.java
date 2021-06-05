@@ -70,8 +70,8 @@ public class CourseRepositoryTest {
 	@Transactional
 	void testAddReviewsInCourse() {
 		//Creating reviews to add
-		Review review1 = new Review("Great explanation and widely covered topics.", ReviewRating.VERY_GOOD.getValue());
-		Review review2 = new Review("I'm beginner. It's too much information for me.", ReviewRating.AVERAGE.getValue());
+		Review review1 = new Review("Great explanation and widely covered topics.", ReviewRating.VERY_GOOD);
+		Review review2 = new Review("I'm beginner. It's too much information for me.", ReviewRating.AVERAGE);
 		
 		List<Review> newReviewList = new ArrayList<>();
 		newReviewList.add(review1);
