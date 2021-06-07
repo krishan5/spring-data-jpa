@@ -1,4 +1,5 @@
 # spring-boot
 Spring boot learning.
 
-(In progress)
+Spring Data JPA
+Spring boot and Spring cloud (In progress)
