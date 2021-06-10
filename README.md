@@ -1,5 +1,5 @@
 # spring-data-jpa
-Spring Data JPA topics covered :
+Spring Data JPA and Hibernate topics are covered :
 1. H2 DB configuration.
 2. JPA, Hibernate, Spring JPA specific annotations.
 3. Basic annotations : @Transactional, @Entity, @Table, @Column, @Id, @GeneratedValue, @Embeddable, @Embedded, @Enumerated etc.
