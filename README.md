@@ -12,3 +12,7 @@ Spring Data JPA and Hibernate topics are covered :
 10. JPA entity lifecycle events annotations : @PostLoad, @PrePersist, @PostPersist, @PreRemove, @PostRemove, @PreUpdate, @PostUpdate.
 11. Different ways to deal with DB : EntityManager, CriteriaQuery, JPQL, Native queries, Spring data JPA repository interfaces.
 12. Performance tuning in case of LAZY fetch and usage of mapping annotations.
+
+# Hibernate objects :
+* SessionFactory : Reads the hibernate config file. It is used to create session objects. It is a heavy weight object hence create only once in your project.
+* Session : It is a wrapper around JDBC object. It is a main object to save/retrieve object to DB. It is a short lived objects. It is retrieved from SessionFactory.
